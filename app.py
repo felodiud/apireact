@@ -1,8 +1,11 @@
 from flask import Flask
-
+from models import db , User 
 
 #Instanciar nuestra aplicacion de Flask
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+db.init_app(app) #conetca con base de datops cuand oapp se ejecuta
+
 
 
 @app.route("/")
@@ -23,7 +26,8 @@ def post():
 def delete():
     return "METHOD DELETE"
 
-
+with app.app_context():
+    db.create_all()
 
 
 
